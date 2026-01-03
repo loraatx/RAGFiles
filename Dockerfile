@@ -17,12 +17,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY main.py .
 COPY query_rag.py .
 
-# Create directory for ChromaDB (will be mounted or copied)
-RUN mkdir -p /app/chroma_db
-
-# Copy chroma_db if it exists in the build context
-# If not present, the app will start but return 503 until DB is mounted
-COPY chroma_db/ /app/chroma_db/ 2>/dev/null || true
+# Copy ChromaDB database - THIS MUST EXIST IN YOUR BUILD DIRECTORY
+# If build fails here, make sure chroma_db/ folder is present
+COPY chroma_db/ /app/chroma_db/
 
 # Set environment variables
 ENV PORT=8080
@@ -35,5 +32,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8080/health || exit 1
 
-# Run the application with optimized settings for Cloud Run
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "1", "--loop", "uvloop", "--http", "httptools"]
+# Run the application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "1"]
