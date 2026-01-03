@@ -9,7 +9,7 @@ steps:
     args: ['push', 'us-central1-docker.pkg.dev/austin-planning-rag/cloud-run-source-deploy/austin-rag-api:latest']
     timeout: '1800s'
 
-  # Deploy container image to Cloud Run
+  # Deploy container image to Cloud Run with Secret Manager
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
@@ -24,7 +24,8 @@ steps:
       - '--timeout=300'
       - '--max-instances=10'
       - '--min-instances=0'
-      - '--set-env-vars=OPENAI_API_KEY=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'
+      - '--concurrency=80'
+      - '--set-secrets=OPENAI_API_KEY=openai-api-key:latest'
 
 options:
   machineType: 'E2_HIGHCPU_8'
