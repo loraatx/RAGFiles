@@ -4,7 +4,7 @@ uvicorn[standard]>=0.27.0
 pydantic>=2.5.0
 
 # RAG dependencies
-chromadb==0.4.0
+chromadb==0.5.0
 openai>=1.12.0
 tiktoken>=0.5.0
 
