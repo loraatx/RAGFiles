@@ -19,7 +19,7 @@ steps:
       - '--image=us-central1-docker.pkg.dev/austin-planning-rag/cloud-run-source-deploy/austin-rag-api:latest'
       - '--region=us-central1'
       - '--allow-unauthenticated'
-      - '--memory=4Gi'
+      - '--memory=8Gi'
       - '--cpu=2'
       - '--timeout=300'
       - '--max-instances=10'
