@@ -9,7 +9,10 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements first for better caching
+# Install numpy FIRST to prevent chromadb from pulling numpy 2.x
+RUN pip install "numpy<2.0.0"
+
+# Copy requirements and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
